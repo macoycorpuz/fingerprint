@@ -10,12 +10,16 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QSizeGrip
 import sys
 
-class Ui_MainWindow(QtWidgets.QDialog):
+def btnCancel_clicked():
+    sys.exit(app.exec_())
+
+class Ui_AdminWindow(QtWidgets.QDialog):
     def setupUi(self, MainWindow):
-        MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(480, 320)
+        AdminWindow.setObjectName("MainWindow")
+        AdminWindow.resize(480, 320)
         
-        self.setWindowFlags(QtCore.Qt.FramelessWindowHint)
+        AdminWindow.setFixedSize(480,320)
+        AdminWindow.setWindowFlags(QtCore.Qt.FramelessWindowHint)
         
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
@@ -41,10 +45,12 @@ class Ui_MainWindow(QtWidgets.QDialog):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        AdminWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.label.setText(_translate("MainWindow", "Select Employee to Register:"))
         self.btnCancel.setText(_translate("MainWindow", "Cancel"))
 
+        """User Code"""
+        self.btnCancel.clicked.connect(btnCancel_clicked)
 
 
 if __name__ == "__main__":
