@@ -14,7 +14,7 @@ class Ui_MainWindow(QtWidgets.QDialog):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(480, 320)
-        
+        # MainWindow.setWindowFlags(QtCore.Qt.FramelessWindowHint)        
         self.setWindowFlags(QtCore.Qt.FramelessWindowHint)
         
         self.centralwidget = QtWidgets.QWidget(MainWindow)
