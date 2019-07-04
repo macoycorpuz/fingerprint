@@ -7,7 +7,8 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+import time
+from datetime import datetime
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -18,14 +19,14 @@ class Ui_MainWindow(object):
         self.lblTime = QtWidgets.QLabel(self.centralwidget)
         self.lblTime.setGeometry(QtCore.QRect(0, 0, 471, 181))
         font = QtGui.QFont()
-        font.setPointSize(107)
+        font.setPointSize(60)
         self.lblTime.setFont(font)
         self.lblTime.setAlignment(QtCore.Qt.AlignCenter)
         self.lblTime.setObjectName("lblTime")
         self.lblDate = QtWidgets.QLabel(self.centralwidget)
         self.lblDate.setGeometry(QtCore.QRect(0, 180, 471, 111))
         font = QtGui.QFont()
-        font.setPointSize(66)
+        font.setPointSize(50)
         self.lblDate.setFont(font)
         self.lblDate.setAlignment(QtCore.Qt.AlignCenter)
         self.lblDate.setObjectName("lblDate")
@@ -53,4 +54,18 @@ if __name__ == "__main__":
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
     MainWindow.show()
+    
+    def update_time():
+        
+        now=datetime.now()
+        
+        currentTime=now.strftime("%I:%M:%S %p")
+        currentDate=now.strftime("%b, %d %Y")
+        
+        ui.lblTime.setText(currentTime)
+        ui.lblDate.setText(currentDate)
+
+    timer = QtCore.QTimer()
+    timer.timeout.connect(update_time)
+    timer.start(50)  #Update every 50 milliseconds
     sys.exit(app.exec_())
