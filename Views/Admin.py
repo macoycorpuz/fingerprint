@@ -15,19 +15,12 @@ def btnCancel_clicked():
 
 class Ui_AdminWindow(QtWidgets.QDialog):
     def setupUi(self, MainWindow):
-<<<<<<< HEAD
         AdminWindow.setObjectName("MainWindow")
         AdminWindow.resize(480, 320)
-        
+
         AdminWindow.setFixedSize(480,320)
         AdminWindow.setWindowFlags(QtCore.Qt.FramelessWindowHint)
-=======
-        MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(480, 320)
-        # MainWindow.setWindowFlags(QtCore.Qt.FramelessWindowHint)        
-        self.setWindowFlags(QtCore.Qt.FramelessWindowHint)
->>>>>>> 26fa793c7f1d256e81d7629f187e5fe7ae1171dc
-        
+
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.lstEmployees = QtWidgets.QListView(self.centralwidget)
