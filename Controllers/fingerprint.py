@@ -7,11 +7,16 @@ import sys
 sys.path.append('../')
 import Error
 
-errorDialogUi=QtWidgets.QDialog()
-errorUi=Ui_errorDialog()
-errorUi.setupUi(errorDialog)
 
 class fingerprint:
+    def errorMessage(self, message):
+        errorDialogUi=QtWidgets.QDialog()
+        errorUi=Ui_errorDialog()
+        errorUi.setupUi(errorDialog)
+        errorDialog.show()
+        errorUi.lblError.setText(message)
+        
+
     def searchFingerprint(self):
             ## Search for a finger
             ##
@@ -48,11 +53,9 @@ class fingerprint:
                 accuracyScore = result[1]
 
                 if ( positionNumber == -1 ):
-                    errorDialog.show()
-                    errorUi.lblError.setText("No fingerprint found! Please try again.")
                     exit(0)
                 else:
-
+                    errorMessage('Error here')
                     #print('Found template at position #' + str(positionNumber))
                     #print('The accuracy score is: ' + str(accuracyScore))
 
