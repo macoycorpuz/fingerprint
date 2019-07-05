@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'Timed_out.ui'
+# Form implementation generated from reading ui file 'Timed_in.ui'
 #
 # Created by: PyQt5 UI code generator 5.12.1
 #
@@ -9,7 +9,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_MainWindow(object):
+class Ui_TimedWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(480, 320)
@@ -52,7 +52,7 @@ class Ui_MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.label.setText(_translate("MainWindow", "<name>"))
-        self.label_2.setText(_translate("MainWindow", "Time Out:"))
+        self.label_2.setText(_translate("MainWindow", "Time In:"))
         self.label_3.setText(_translate("MainWindow", "<time in>"))
 
 
@@ -62,7 +62,7 @@ if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
+    ui = Ui_TimedWindow()
     ui.setupUi(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())
