@@ -9,6 +9,8 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 import time
 from datetime import datetime
+import hashlib
+from pyfingerprint.pyfingerprint import PyFingerprint
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -45,8 +47,6 @@ class Ui_MainWindow(object):
         self.lblDate.setText(_translate("MainWindow", "DATE"))
 
 
-
-
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
@@ -67,5 +67,5 @@ if __name__ == "__main__":
 
     timer = QtCore.QTimer()
     timer.timeout.connect(update_time)
-    timer.start(50)  #Update every 50 milliseconds
+    timer.start(1)  #Update every 50 milliseconds
     sys.exit(app.exec_())
