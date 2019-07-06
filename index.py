@@ -1,31 +1,76 @@
 import sys
+from datetime import datetime
 from PyQt5 import QtCore, QtGui, QtWidgets
 from Views.Admin import Ui_AdminWindow
 from Views.Main import Ui_MainWindow
 from Views.Timed import Ui_TimedWindow
+from Views.Status import Ui_StatusDialog
+import fingerprint
+import database
 
 app = QtWidgets.QApplication(sys.argv)
 MainWindow = QtWidgets.QMainWindow()
 AdminWindow = QtWidgets.QMainWindow()
 TimedWindow = QtWidgets.QMainWindow()
-    
-def show_main_window():
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
+StatusDialog = QtWidgets.QDialog()
 
-def show_admin_window():
-    ui = Ui_AdminWindow()
-    ui.setupUi(AdminWindow)
-    AdminWindow.show()
+ui_main = Ui_MainWindow()
+ui_admin = Ui_AdminWindow()
+ui_timed = Ui_TimedWindow()
+ui_status = Ui_StatusDialog()
 
-def show_timed_window():
-    ui = Ui_TimedWindow()
-    ui.setupUi(TimedWindow)
+ui_main.setupUi(MainWindow)
+ui_admin.setupUi(AdminWindow)
+ui_timed.setupUi(TimedWindow)
+ui_status.setupUi(StatusDialog)
+
+f = fingerprint()
+db = database()
+
+def update_time():
+    now=datetime.now()
+    currentTime=now.strftime("%I:%M:%S %p")
+    currentDate=now.strftime("%b, %d %Y")
+    ui_main.lblTime.setText(currentTime)
+    ui_main.lblDate.setText(currentDate)
+
+# Set up in a thread
+def statusMessage(message, color='green', t=5):
+    StatusDialog.show()
+    ui_status.lblStatus.setText(message)
+    ui_status.lblStatus.setStyleSheet('color: ' + color)
+    #Set Timer
+    StatusDialog.close()
+
+# Set up in a thread
+def timedMessage(name, status, t):
     TimedWindow.show()
+    ui_timed.lblName.setText(name)
+    ui_timed.lblStatus.setText(status)
+    ui_timed.lblTime.setText(t)
+    #Set Timer
+    TimedWindow.close()
 
+def check_fingerprint():
+    error, fingerId = f.searchFingerprint()
+    if error: return statusMessage(error, 'red')
+    
+    # if db.isAdmin(fingerId):
+    #     register_employee()
+    # else:
+    #     name, status = db.saveTime(fingerId)
+    #     timedMessage(name, status, t)
 
 if __name__ == "__main__":
-    show_main_window()
+    MainWindow.show()
+
+    # Timer Loop
+    timer = QtCore.QTimer()
+    timer.timeout.connect(update_time)
+    timer.start(1)
+
+    # Run this in a different thread
+    # Thread(check_fingerprint)
+
     sys.exit(app.exec_())
      

@@ -14,14 +14,14 @@ def btnCancel_clicked():
     sys.exit(app.exec_())
 
 class Ui_AdminWindow(QtWidgets.QDialog):
-    def setupUi(self, MainWindow):
-        AdminWindow.setObjectName("MainWindow")
+    def setupUi(self, AdminWindow):
+        AdminWindow.setObjectName("AdminWindow")
         AdminWindow.resize(480, 320)
 
         AdminWindow.setFixedSize(480,320)
         AdminWindow.setWindowFlags(QtCore.Qt.FramelessWindowHint)
 
-        self.centralwidget = QtWidgets.QWidget(MainWindow)
+        self.centralwidget = QtWidgets.QWidget(AdminWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.lstEmployees = QtWidgets.QListView(self.centralwidget)
         self.lstEmployees.setGeometry(QtCore.QRect(0, 40, 471, 221))
@@ -35,19 +35,19 @@ class Ui_AdminWindow(QtWidgets.QDialog):
         self.btnCancel = QtWidgets.QPushButton(self.centralwidget)
         self.btnCancel.setGeometry(QtCore.QRect(0, 262, 471, 31))
         self.btnCancel.setObjectName("btnCancel")
-        MainWindow.setCentralWidget(self.centralwidget)
-        self.statusbar = QtWidgets.QStatusBar(MainWindow)
+        AdminWindow.setCentralWidget(self.centralwidget)
+        self.statusbar = QtWidgets.QStatusBar(AdminWindow)
         self.statusbar.setObjectName("statusbar")
-        MainWindow.setStatusBar(self.statusbar)
+        AdminWindow.setStatusBar(self.statusbar)
 
-        self.retranslateUi(MainWindow)
-        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+        self.retranslateUi(AdminWindow)
+        QtCore.QMetaObject.connectSlotsByName(AdminWindow)
 
-    def retranslateUi(self, MainWindow):
+    def retranslateUi(self, AdminWindow):
         _translate = QtCore.QCoreApplication.translate
-        AdminWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.label.setText(_translate("MainWindow", "Select Employee to Register:"))
-        self.btnCancel.setText(_translate("MainWindow", "Cancel"))
+        AdminWindow.setWindowTitle(_translate("AdminWindow", "AdminWindow"))
+        self.label.setText(_translate("AdminWindow", "Select Employee to Register:"))
+        self.btnCancel.setText(_translate("AdminWindow", "Cancel"))
 
         """User Code"""
         self.btnCancel.clicked.connect(btnCancel_clicked)
@@ -56,8 +56,8 @@ class Ui_AdminWindow(QtWidgets.QDialog):
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
+    AdminWindow = QtWidgets.QMainWindow()
+    ui = Ui_AdminWindow()
+    ui.setupUi(AdminWindow)
+    AdminWindow.show()
     sys.exit(app.exec_())

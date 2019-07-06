@@ -9,8 +9,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 import time
 from datetime import datetime
-import hashlib
-from pyfingerprint.pyfingerprint import PyFingerprint
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
