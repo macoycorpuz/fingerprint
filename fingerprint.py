@@ -5,7 +5,7 @@ from pyfingerprint.pyfingerprint import PyFingerprint
 class fingerprint(object):
     def __init__(self):
         self.error = None
-        self.positionNumber = 0
+        self.positionNumber = -1
         try:
             self.f = PyFingerprint('/dev/ttyUSB0', 57600, 0xFFFFFFFF, 0x00000000)
             if ( self.f.verifyPassword() == False ):
