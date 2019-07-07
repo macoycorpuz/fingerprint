@@ -70,7 +70,9 @@ def check_fingerprint():
         if error:
             print("Error Message: %s"  % error)
             statusMessage(error, 'red')
-        
+            time.sleep(10)
+            continue
+
         # if db.isAdmin(fingerId):
         #     register_employee()
         # else:
