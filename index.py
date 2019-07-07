@@ -55,8 +55,6 @@ def check_fingerprint():
             error, fingerId = f.searchFingerprint()
             if db.isAdmin(fingerId):
                 adminRegister()
-                time.sleep(10)
-                AdminWindow.close()
             elif fingerId > 0:
                 name, status = db.saveTime(fingerId)
                 timedMessage(name, status)
@@ -72,7 +70,7 @@ def check_fingerprint():
 
 
 # Initialize Events
-# ui_admin.btnCancel.clicked.connect(AdminWindow.close)
+ui_admin.btnCancel.clicked.connect(AdminWindow.close)
 
 if __name__ == "__main__":
     MainWindow.show()
