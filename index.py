@@ -41,6 +41,7 @@ def update_time():
 # Cancel Button
 def btnCancel_clicked():
     AdminWindow.close()
+    isFingerprintRunning = True
 
 # PyQt Sleep
 def timesleep(t):
