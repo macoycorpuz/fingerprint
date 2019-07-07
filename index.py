@@ -35,10 +35,6 @@ def update_time():
     ui_main.lblTime.setText(currentTime)
     ui_main.lblDate.setText(currentDate)
 
-def btnCancel_clicked():
-    AdminWindow.close()
-    isFingerprintRunning = True
-
 def statusMessage(message, color='green'):
     StatusDialog.show()
     ui_status.lblStatus.setText(message)
@@ -76,7 +72,7 @@ def check_fingerprint():
 
 
 # Initialize Events
-ui_admin.btnCancel.clicked.connect(btnCancel_clicked)
+# ui_admin.btnCancel.clicked.connect(AdminWindow.close)
 
 if __name__ == "__main__":
     MainWindow.show()
