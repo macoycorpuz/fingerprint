@@ -25,12 +25,10 @@ ui_admin.setupUi(AdminWindow)
 ui_timed.setupUi(TimedWindow)
 ui_status.setupUi(StatusDialog)
 
-# Initialize Libraries
 f = fingerprint()
 db = database()
 isFingerprintRunning = True
 
-# Update Time
 def update_time():
     now=datetime.now()
     currentTime=now.strftime("%I:%M:%S %p")
@@ -38,38 +36,33 @@ def update_time():
     ui_main.lblTime.setText(currentTime)
     ui_main.lblDate.setText(currentDate)
 
-# Cancel Button
 def btnCancel_clicked():
     AdminWindow.close()
     isFingerprintRunning = True
 
-# PyQt Sleep
-def timesleep(t):
-    loop = QtCore.QEventLoop()
-    QtCore.QTimer.singleShot(t, loop.quit)
-    loop.exec_()
+def close_status_dialog():
+    StatusDialog.close()
+    isFingerprintRunning = True
+
+def close_timed_dialog():
+    TimedWindow.close()
+    isFingerprintRunning = True
 
 def statusMessage(message, color='green', t=3000):
     StatusDialog.show()
     ui_status.lblStatus.setText(message)
     ui_status.lblStatus.setStyleSheet('color: ' + color)
     isFingerprintRunning = False
-    timesleep(t)
-    StatusDialog.close()
-    isFingerprintRunning = True
+    QtCore.QTimer.singleShot(t, StatusDialog.close)
 
 def timedMessage(name, status):
-    now=datetime.now()
     t=now.strftime("%I:%M:%S %p")
     TimedWindow.show()
     ui_timed.lblName.setText(name)
     ui_timed.lblStatus.setText("Time %s:"  % status)
-    ui_timed.lblTime.setText(str(t))
+    ui_timed.lblTime.setText(datetime.now().strftime("%I:%M:%S %p"))
     isFingerprintRunning = False
-    timesleep(5000)
-    TimedWindow.close()
-    isFingerprintRunning = True
-
+    QtCore.QTimer.singleShot(5000, StatusDialog.close)
 
 def register_employee():
     print("Wow Admin ka")
