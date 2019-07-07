@@ -28,8 +28,7 @@ ui_status.setupUi(StatusDialog)
 f = fingerprint()
 db = database()
 isFingerprintRunning = True
-isShowStatusDialog = False
-isShowTimedWindow = False
+global isShowStatusDialog, isShowTimedWindow = False, False
 
 def update_time():
     now=datetime.now()
