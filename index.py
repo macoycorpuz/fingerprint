@@ -28,7 +28,6 @@ ui_status.setupUi(StatusDialog)
 f = fingerprint()
 db = database()
 isFingerprintRunning = True
-global isShowStatusDialog, isShowTimedWindow
 isShowStatusDialog = False
 isShowTimedWindow = False
 
@@ -77,6 +76,7 @@ def check_fingerprint():
             statusMessage(error, 'red')
 
 def close_dialog():
+    time.sleep(2)
     while True:
         if isShowStatusDialog:
             time.sleep(5)
