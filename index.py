@@ -68,8 +68,6 @@ def check_fingerprint():
             time.sleep(5)
             StatusDialog.close()
 
-
-# Initialize Events
 ui_admin.btnCancel.clicked.connect(AdminWindow.close)
 
 if __name__ == "__main__":
