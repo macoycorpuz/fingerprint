@@ -40,26 +40,27 @@ def btnCancel_clicked():
     isFingerprintRunning = True
 
 def statusMessage(message, color='green'):
-    isFingerprintRunning = False
     StatusDialog.show()
     ui_status.lblStatus.setText(message)
     ui_status.lblStatus.setStyleSheet('color: ' + color)
 
 def timedMessage(name, status):
-    isFingerprintRunning = False
     TimedWindow.show()
     ui_timed.lblName.setText(name)
     ui_timed.lblStatus.setText("Time %s:"  % status)
     ui_timed.lblTime.setText(datetime.now().strftime("%I:%M:%S %p"))
+
+def adminRegister():
+    AdminWindow.show()
 
 def check_fingerprint():
     while True:
         try:
             error, fingerId = f.searchFingerprint()
             if db.isAdmin(fingerId):
-                AdminWindow.show()
-                time.sleep(5)
-                TimedWindow.close()
+                adminRegister()
+                time.sleep(10)
+                AdminWindow.close()
             elif fingerId > 0:
                 name, status = db.saveTime(fingerId)
                 timedMessage(name, status)
