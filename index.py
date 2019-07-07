@@ -44,12 +44,14 @@ def btnCancel_clicked():
 
 def statusMessage(message, color='green'):
     isShowStatusDialog = True
+    isFingerprintRunning = False
     StatusDialog.show()
     ui_status.lblStatus.setText(message)
     ui_status.lblStatus.setStyleSheet('color: ' + color)
 
 def timedMessage(name, status):
     isShowTimedWindow = True
+    isFingerprintRunning = False
     TimedWindow.show()
     ui_timed.lblName.setText(name)
     ui_timed.lblStatus.setText("Time %s:"  % status)
@@ -61,7 +63,7 @@ def register_employee():
     isFingerprintRunning = False
 
 def check_fingerprint():
-    while isFingerprintRunning and not isShowStatusDialog and not isShowTimedWindow:
+    while isFingerprintRunning:
         try:
             error, fingerId = f.searchFingerprint()
             if db.isAdmin(fingerId):
@@ -82,10 +84,12 @@ def close_dialog():
             time.sleep(5)
             StatusDialog.close()
             isShowStatusDialog = False
+            isFingerprintRunning = True
         if isShowTimedWindow:
             time.sleep(5)
             TimedWindow.close()
             isShowTimedWindow = False
+            isFingerprintRunning = True
 
 
 # Initialize Events

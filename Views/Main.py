@@ -47,7 +47,6 @@ class Ui_MainWindow(object):
 
 def hello():
     while True:
-        MainWindow.show()
         now=datetime.now()
         currentTime=now.strftime("%I:%M:%S %p")
         currentDate=now.strftime("%b, %d %Y")
@@ -57,12 +56,19 @@ def hello():
         print('hello')
 
 
+
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
+    MainWindow.show()
+    now=datetime.now()
+    currentTime=now.strftime("%I:%M:%S %p")
+    currentDate=now.strftime("%b, %d %Y")
+    ui.lblTime.setText(currentTime)
+    ui.lblDate.setText(currentDate)
 
     t = Thread(target=hello)
     t.start()
