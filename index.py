@@ -70,20 +70,20 @@ def register_employee():
     AdminWindow.show()
     isFingerprintRunning = False
 
-def check_fingerprint():
-    while isFingerprintRunning:
-        try:
-            error, fingerId = f.searchFingerprint()
-            if db.isAdmin(fingerId):
-                register_employee()
-            elif fingerId > 0:
-                name, status = db.saveTime(fingerId)
-                timedMessage(name, status)
-            elif error: raise Exception(error)
-        except Exception as e:
-            if "Communication" in str(e): continue
-            print("Error Message: %s"  % e)
-            statusMessage(error, 'red')
+# def check_fingerprint():
+#     while isFingerprintRunning:
+#         try:
+#             error, fingerId = f.searchFingerprint()
+#             if db.isAdmin(fingerId):
+#                 register_employee()
+#             elif fingerId > 0:
+#                 name, status = db.saveTime(fingerId)
+#                 timedMessage(name, status)
+#             elif error: raise Exception(error)
+#         except Exception as e:
+#             if "Communication" in str(e): continue
+#             print("Error Message: %s"  % e)
+#             statusMessage(error, 'red')
 
 # Initialize Events
 ui_admin.btnCancel.clicked.connect(btnCancel_clicked)
@@ -95,8 +95,9 @@ if __name__ == "__main__":
     timer.timeout.connect(update_time)
     timer.start(1)
 
-    FingerprintThread = Thread(target=check_fingerprint)
-    FingerprintThread.start()
+    statusMessage('error', 'red')
+    # FingerprintThread = Thread(target=check_fingerprint)
+    # FingerprintThread.start()
 
     sys.exit(app.exec_())
      
