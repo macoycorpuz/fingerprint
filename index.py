@@ -92,9 +92,9 @@ if __name__ == "__main__":
     MainWindow.show()
 
     # Timer Loop
-    timer = QtCore.QTimer()
-    timer.timeout.connect(update_time)
-    timer.start(1)
+    # timer = QtCore.QTimer()
+    # timer.timeout.connect(update_time)
+    # timer.start(1)
 
     FingerprintThread = Thread(target=check_fingerprint)
     FingerprintThread.start()
