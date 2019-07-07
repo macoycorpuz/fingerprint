@@ -43,11 +43,13 @@ def btnCancel_clicked():
     AdminWindow.close()
 
 # Set up in a thread
-def statusMessage(message, color='green', t=5):
+def statusMessage(message, color='green', t=5000):
     StatusDialog.show()
     ui_status.lblStatus.setText(message)
     ui_status.lblStatus.setStyleSheet('color: ' + color)
-    #Set Timer
+    loop = QEventLoop()
+    QTimer.singleShot(t, loop.quit)
+    loop.exec_()
     StatusDialog.close()
 
 # Set up in a thread
