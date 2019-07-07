@@ -47,8 +47,8 @@ def statusMessage(message, color='green', t=5000):
     StatusDialog.show()
     ui_status.lblStatus.setText(message)
     ui_status.lblStatus.setStyleSheet('color: ' + color)
-    loop = QEventLoop()
-    QTimer.singleShot(t, loop.quit)
+    loop = QtCore.QEventLoop()
+    QtCore.QTimer.singleShot(t, loop.quit)
     loop.exec_()
     StatusDialog.close()
 
