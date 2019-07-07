@@ -42,23 +42,26 @@ def update_time():
 def btnCancel_clicked():
     AdminWindow.close()
 
-# Set up in a thread
-def statusMessage(message, color='green', t=5000):
-    StatusDialog.show()
-    ui_status.lblStatus.setText(message)
-    ui_status.lblStatus.setStyleSheet('color: ' + color)
+def timesleep(t):
     loop = QtCore.QEventLoop()
     QtCore.QTimer.singleShot(t, loop.quit)
     loop.exec_()
+
+# Set up in a thread
+def statusMessage(message, color='green', t=3000):
+    StatusDialog.show()
+    ui_status.lblStatus.setText(message)
+    ui_status.lblStatus.setStyleSheet('color: ' + color)
+    timesleep(t)
     StatusDialog.close()
 
 # Set up in a thread
-def timedMessage(name, status, t):
+def timedMessage(name, status, t=5000):
     TimedWindow.show()
     ui_timed.lblName.setText(name)
     ui_timed.lblStatus.setText(status)
     ui_timed.lblTime.setText(t)
-    #Set Timer
+    timesleep(t)
     TimedWindow.close()
 
 def check_fingerprint():
@@ -66,7 +69,7 @@ def check_fingerprint():
         error, fingerId = f.searchFingerprint()
         if error:
             print("Error Message: %s"  % error)
-            return statusMessage(error, 'red')
+            statusMessage(error, 'red')
         
         # if db.isAdmin(fingerId):
         #     register_employee()
