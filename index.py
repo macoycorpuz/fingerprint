@@ -28,6 +28,7 @@ ui_status.setupUi(StatusDialog)
 # Initialize Libraries
 f = fingerprint()
 db = database()
+isFingerprintRunning = True
 
 # Update Time
 def update_time():
@@ -51,28 +52,29 @@ def statusMessage(message, color='green', t=3000):
     StatusDialog.show()
     ui_status.lblStatus.setText(message)
     ui_status.lblStatus.setStyleSheet('color: ' + color)
-    FingerprintThread.terminate()
+    isFingerprintRunning = False
     timesleep(t)
     StatusDialog.close()
-    FingerprintThread.start()
+    isFingerprintRunning = True
 
 def timedMessage(name, status, t=5000):
     TimedWindow.show()
     ui_timed.lblName.setText(name)
     ui_timed.lblStatus.setText("Time %s:"  % status)
     ui_timed.lblTime.setText(t)
-    FingerprintThread.terminate()
+    isFingerprintRunning = False
     timesleep(t)
     TimedWindow.close()
-    FingerprintThread.start()
+    isFingerprintRunning = True
+
 
 def register_employee():
     print("Wow Admin ka")
     AdminWindow.show()
-    FingerprintThread.terminate()
+    isFingerprintRunning = False
 
 def check_fingerprint():
-    while True:
+    while isFingerprintRunning:
         try:
             error, fingerId = f.searchFingerprint()
             if error: raise Exception(error)
