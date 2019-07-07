@@ -9,6 +9,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 import time
 from datetime import datetime
+from threading import Thread
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -44,6 +45,10 @@ class Ui_MainWindow(object):
         self.lblTime.setText(_translate("MainWindow", "TIME"))
         self.lblDate.setText(_translate("MainWindow", "DATE"))
 
+def hello():
+    while True:
+        print('hello')
+
 
 if __name__ == "__main__":
     import sys
@@ -52,5 +57,20 @@ if __name__ == "__main__":
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
     MainWindow.show()
-    QtCore.QTimer.singleShot(2000, MainWindow.close)
+    now=datetime.now()
+    currentTime=now.strftime("%I:%M:%S %p")
+    currentDate=now.strftime("%b, %d %Y")
+    ui.lblTime.setText(currentTime)
+    ui.lblDate.setText(currentDate)
+    def update_time():
+        now=datetime.now()
+        currentTime=now.strftime("%I:%M:%S %p")
+        currentDate=now.strftime("%b, %d %Y")
+        ui.lblTime.setText(currentTime)
+        ui.lblDate.setText(currentDate)
+    QtCore.QTimer.singleShot(5000, update_time)
+
+    t = Thread(target=hello)
+    t.start()
+
     sys.exit(app.exec_())
