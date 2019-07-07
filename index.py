@@ -1,4 +1,4 @@
-import sys
+import sys, time
 from datetime import datetime
 from PyQt5 import QtCore, QtGui, QtWidgets
 from Views.Admin import Ui_AdminWindow
@@ -42,48 +42,50 @@ def btnCancel_clicked():
     AdminWindow.close()
     isFingerprintRunning = True
 
-def close_status_dialog():
-    StatusDialog.close()
-    isFingerprintRunning = True
-
-def close_timed_dialog():
-    TimedWindow.close()
-    isFingerprintRunning = True
-
 def statusMessage(message, color='green'):
+    isShowStatusDialog = True
     StatusDialog.show()
     ui_status.lblStatus.setText(message)
     ui_status.lblStatus.setStyleSheet('color: ' + color)
-    isFingerprintRunning = False
-    QtCore.QTimer.singleShot(5000, close_status_dialog)
 
 def timedMessage(name, status):
+    isShowTimedWindow = True
     TimedWindow.show()
     ui_timed.lblName.setText(name)
     ui_timed.lblStatus.setText("Time %s:"  % status)
     ui_timed.lblTime.setText(datetime.now().strftime("%I:%M:%S %p"))
-    isFingerprintRunning = False
-    QtCore.QTimer.singleShot(5000, close_timed_dialog)
 
 def register_employee():
     print("Wow Admin ka")
     AdminWindow.show()
     isFingerprintRunning = False
 
-# def check_fingerprint():
-#     while isFingerprintRunning:
-#         try:
-#             error, fingerId = f.searchFingerprint()
-#             if db.isAdmin(fingerId):
-#                 register_employee()
-#             elif fingerId > 0:
-#                 name, status = db.saveTime(fingerId)
-#                 timedMessage(name, status)
-#             elif error: raise Exception(error)
-#         except Exception as e:
-#             if "Communication" in str(e): continue
-#             print("Error Message: %s"  % e)
-#             statusMessage(error, 'red')
+def check_fingerprint():
+    while isFingerprintRunning and not isShowStatusDialog and not isShowTimedWindow:
+        try:
+            error, fingerId = f.searchFingerprint()
+            if db.isAdmin(fingerId):
+                register_employee()
+            elif fingerId > 0:
+                name, status = db.saveTime(fingerId)
+                timedMessage(name, status)
+            elif error: raise Exception(error)
+        except Exception as e:
+            if "Communication" in str(e): continue
+            print("Error Message: %s"  % e)
+            statusMessage(error, 'red')
+
+def close_dialog():
+    while True:
+        if isShowStatusDialog:
+            time.sleep(5)
+            StatusDialog.close()
+            isShowStatusDialog = False
+        if isShowTimedWindow:
+            time.sleep(5)
+            TimedWindow.close()
+            isShowTimedWindow = False
+
 
 # Initialize Events
 ui_admin.btnCancel.clicked.connect(btnCancel_clicked)
@@ -95,9 +97,11 @@ if __name__ == "__main__":
     timer.timeout.connect(update_time)
     timer.start(1)
 
-    statusMessage('error', 'red')
-    # FingerprintThread = Thread(target=check_fingerprint)
-    # FingerprintThread.start()
+    FingerprintThread = Thread(target=check_fingerprint)
+    FingerprintThread.start()
+
+    DialogThread = Thread(target=close_dialog)
+    DialogThread.start()
 
     sys.exit(app.exec_())
      
