@@ -67,6 +67,7 @@ def check_fingerprint():
             elif fingerId > 0:
                 name, status = db.saveTime(fingerId)
                 timedMessage(name, status)
+                time.sleep(5)
                 TimedWindow.close()
                 isFingerprintRunning = True
             elif error: raise Exception(error)
@@ -91,9 +92,6 @@ if __name__ == "__main__":
 
     FingerprintThread = Thread(target=check_fingerprint)
     FingerprintThread.start()
-
-    DialogThread = Thread(target=close_dialog)
-    DialogThread.start()
 
     sys.exit(app.exec_())
      
