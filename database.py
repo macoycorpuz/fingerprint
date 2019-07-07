@@ -28,7 +28,7 @@ class database:
         return ["Marcuz Corpuz", "Daryl Mora", "Paolo Merina"]
 
     def isAdmin(self, fingerId):
-        return fingerId == 1 or fingerId == 0
+        return fingerId == 0
 
     def saveTime(self, fingerId):
         if fingerId == 1:
