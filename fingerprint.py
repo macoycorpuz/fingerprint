@@ -16,7 +16,6 @@ class fingerprint(object):
             exit(1)
 
     def readFingerprint(self, buff=0x01):
-        print('Waiting for finger...')
         while ( self.f.readImage() == False ):
             pass
         self.f.convertImage(buff)

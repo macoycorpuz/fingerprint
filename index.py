@@ -64,14 +64,17 @@ def timedMessage(name, status, t=5000):
 
 def register_employee():
     print("Wow Admin ka")
+    AdminWindow.show()
+    FingerprintThread.exit()
 
 def check_fingerprint():
     while True:
         try:
             error, fingerId = f.searchFingerprint()
             if error: raise Exception(error)
-            elif fingerId <= -1: raise Exception("No Fingerprint")
-            elif db.isAdmin(fingerId):
+            # elif fingerId <= -1: raise Exception("No Fingerprint")
+            print("FingerId: " + fingerId)
+            if db.isAdmin(fingerId):
                 register_employee()
             else:
                 name, status = db.saveTime(fingerId)
