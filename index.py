@@ -27,7 +27,6 @@ ui_status.setupUi(StatusDialog)
 
 f = fingerprint()
 db = database()
-isFingerprintRunning = True
 
 def update_time():
     now=datetime.now()
@@ -59,7 +58,7 @@ def register_employee():
     isFingerprintRunning = False
 
 def check_fingerprint():
-    while isFingerprintRunning:
+    while True:
         try:
             error, fingerId = f.searchFingerprint()
             if db.isAdmin(fingerId):
@@ -69,7 +68,6 @@ def check_fingerprint():
                 timedMessage(name, status)
                 time.sleep(5)
                 TimedWindow.close()
-                isFingerprintRunning = True
             elif error: raise Exception(error)
         except Exception as e:
             if "Communication" in str(e): continue
@@ -77,7 +75,6 @@ def check_fingerprint():
             statusMessage(error, 'red')
             time.sleep(5)
             StatusDialog.close()
-            isFingerprintRunning = True
 
 
 # Initialize Events
