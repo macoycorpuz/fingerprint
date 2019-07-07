@@ -27,6 +27,15 @@ class database:
     def fake_therapists(self):
         return ["Marcuz Corpuz", "Daryl Mora", "Paolo Merina"]
 
+    def isAdmin(self, fingerId):
+        return fingerId == 1
+
+    def saveTime(self, fingerId):
+        if fingerId == 1:
+            return "Daryl Mora", "in"
+        else:
+            return "Anonymous", "in"
+
 
 if __name__ == '__main__':
     therapists = get_therapists() 

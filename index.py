@@ -9,7 +9,6 @@ from fingerprint import fingerprint
 from database import database
 from threading import Thread
 
-
 app = QtWidgets.QApplication(sys.argv)
 MainWindow = QtWidgets.QMainWindow()
 AdminWindow = QtWidgets.QMainWindow()
@@ -42,12 +41,12 @@ def update_time():
 def btnCancel_clicked():
     AdminWindow.close()
 
+# PyQt Sleep
 def timesleep(t):
     loop = QtCore.QEventLoop()
     QtCore.QTimer.singleShot(t, loop.quit)
     loop.exec_()
 
-# Set up in a thread
 def statusMessage(message, color='green', t=3000):
     StatusDialog.show()
     ui_status.lblStatus.setText(message)
@@ -55,30 +54,32 @@ def statusMessage(message, color='green', t=3000):
     timesleep(t)
     StatusDialog.close()
 
-# Set up in a thread
 def timedMessage(name, status, t=5000):
     TimedWindow.show()
     ui_timed.lblName.setText(name)
-    ui_timed.lblStatus.setText(status)
+    ui_timed.lblStatus.setText("Time %s:"  % status)
     ui_timed.lblTime.setText(t)
     timesleep(t)
     TimedWindow.close()
 
+def register_employee():
+    print("Wow Admin ka")
+
 def check_fingerprint():
     while True:
-        error, fingerId = f.searchFingerprint()
-        if error:
-            print("Error Message: %s"  % error)
+        try:
+            error, fingerId = f.searchFingerprint()
+            if error: raise Exception(error)
+            elif fingerId <= 0: raise Exception ("No Fingerprint")
+            elif db.isAdmin(fingerId):
+                register_employee()
+            else:
+                name, status = db.saveTime(fingerId)
+                timedMessage(name, status)
+        except Exception as e:
+            if "Communication" in str(e): continue
+            print("Error Message: %s"  % e)
             statusMessage(error, 'red')
-            time.sleep(10)
-            continue
-
-        # if db.isAdmin(fingerId):
-        #     register_employee()
-        # else:
-        #     name, status = db.saveTime(fingerId)
-        #     timedMessage(name, status, t)
-
 
 # Initialize Events
 ui_admin.btnCancel.clicked.connect(btnCancel_clicked)
