@@ -5,8 +5,9 @@ from Views.Admin import Ui_AdminWindow
 from Views.Main import Ui_MainWindow
 from Views.Timed import Ui_TimedWindow
 from Views.Status import Ui_StatusDialog
-# import fingerprint
-import database
+from fingerprint import fingerprint
+from database import database
+from threading import Thread
 
 
 app = QtWidgets.QApplication(sys.argv)
@@ -59,16 +60,17 @@ def timedMessage(name, status, t):
     TimedWindow.close()
 
 def check_fingerprint():
-    error, fingerId = f.searchFingerprint()
-    if error:
-        print("Error Message: %s"  % error)
-        return statusMessage(error, 'red')
-    
-    # if db.isAdmin(fingerId):
-    #     register_employee()
-    # else:
-    #     name, status = db.saveTime(fingerId)
-    #     timedMessage(name, status, t)
+    while True:
+        error, fingerId = f.searchFingerprint()
+        if error:
+            print("Error Message: %s"  % error)
+            return statusMessage(error, 'red')
+        
+        # if db.isAdmin(fingerId):
+        #     register_employee()
+        # else:
+        #     name, status = db.saveTime(fingerId)
+        #     timedMessage(name, status, t)
 
 
 # Initialize Events
@@ -82,9 +84,8 @@ if __name__ == "__main__":
     timer.timeout.connect(update_time)
     timer.start(1)
 
-    # Run this in a different thread
-    # Thread(check_fingerprint)
-    check_fingerprint()
+    FingerprintThread = Thread(target=check_fingerprint)
+    FingerprintThread.start()
 
     sys.exit(app.exec_())
      

@@ -1,6 +1,6 @@
 import hashlib
 import time
-from pyfingerprint.pyfingerprint import pyfingerprint
+from pyfingerprint.pyfingerprint import PyFingerprint
 
 class fingerprint(object):
     def __init__(self):
