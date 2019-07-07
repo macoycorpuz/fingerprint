@@ -52,18 +52,5 @@ if __name__ == "__main__":
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
     MainWindow.show()
-    
-    def update_time():
-        
-        now=datetime.now()
-        
-        currentTime=now.strftime("%I:%M:%S %p")
-        currentDate=now.strftime("%b, %d %Y")
-        
-        ui.lblTime.setText(currentTime)
-        ui.lblDate.setText(currentDate)
-
-    timer = QtCore.QTimer()
-    timer.timeout.connect(update_time)
-    timer.start(1)  #Update every 50 milliseconds
+    QtCore.QTimer.singleShot(2000, MainWindow.close)
     sys.exit(app.exec_())

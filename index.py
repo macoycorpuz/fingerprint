@@ -28,6 +28,8 @@ ui_status.setupUi(StatusDialog)
 f = fingerprint()
 db = database()
 isFingerprintRunning = True
+isShowStatusDialog = False
+isShowTimedWindow = False
 
 def update_time():
     now=datetime.now()
@@ -53,16 +55,15 @@ def statusMessage(message, color='green', t=3000):
     ui_status.lblStatus.setText(message)
     ui_status.lblStatus.setStyleSheet('color: ' + color)
     isFingerprintRunning = False
-    QtCore.QTimer.singleShot(t, close_status_dialog)
+    timer.QTimer.singleShot(t, close_status_dialog)
 
 def timedMessage(name, status):
-    t=now.strftime("%I:%M:%S %p")
     TimedWindow.show()
     ui_timed.lblName.setText(name)
     ui_timed.lblStatus.setText("Time %s:"  % status)
     ui_timed.lblTime.setText(datetime.now().strftime("%I:%M:%S %p"))
     isFingerprintRunning = False
-    QtCore.QTimer.singleShot(5000, close_timed_dialog)
+    timer.singleShot(5000, close_timed_dialog)
 
 def register_employee():
     print("Wow Admin ka")
@@ -80,8 +81,7 @@ def check_fingerprint():
                 timedMessage(name, status)
             elif error: raise Exception(error)
         except Exception as e:
-            if "Communication" in str(e): 
-                continue
+            if "Communication" in str(e): continue
             print("Error Message: %s"  % e)
             statusMessage(error, 'red')
 
@@ -91,10 +91,9 @@ ui_admin.btnCancel.clicked.connect(btnCancel_clicked)
 if __name__ == "__main__":
     MainWindow.show()
 
-    # Timer Loop
-    # timer = QtCore.QTimer()
-    # timer.timeout.connect(update_time)
-    # timer.start(1)
+    timer = QtCore.QTimer()
+    timer.timeout.connect(update_time)
+    timer.start(1)
 
     FingerprintThread = Thread(target=check_fingerprint)
     FingerprintThread.start()
