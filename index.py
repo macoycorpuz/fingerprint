@@ -87,7 +87,9 @@ def check_fingerprint():
                 name, status = db.saveTime(fingerId)
                 timedMessage(name, status)
         except Exception as e:
-            if "Communication" in str(e): continue
+            if "Communication" in str(e): 
+                print("FingerId: " + str(fingerId))
+                continue
             print("Error Message: %s"  % e)
             statusMessage(error, 'red')
 
