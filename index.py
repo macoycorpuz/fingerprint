@@ -28,8 +28,6 @@ ui_status.setupUi(StatusDialog)
 f = fingerprint()
 db = database()
 isFingerprintRunning = True
-isShowStatusDialog = False
-isShowTimedWindow = False
 
 def update_time():
     now=datetime.now()
@@ -43,14 +41,12 @@ def btnCancel_clicked():
     isFingerprintRunning = True
 
 def statusMessage(message, color='green'):
-    isShowStatusDialog = True
     isFingerprintRunning = False
     StatusDialog.show()
     ui_status.lblStatus.setText(message)
     ui_status.lblStatus.setStyleSheet('color: ' + color)
 
 def timedMessage(name, status):
-    isShowTimedWindow = True
     isFingerprintRunning = False
     TimedWindow.show()
     ui_timed.lblName.setText(name)
@@ -71,24 +67,15 @@ def check_fingerprint():
             elif fingerId > 0:
                 name, status = db.saveTime(fingerId)
                 timedMessage(name, status)
+                TimedWindow.close()
+                isFingerprintRunning = True
             elif error: raise Exception(error)
         except Exception as e:
             if "Communication" in str(e): continue
             print("Error Message: %s"  % e)
             statusMessage(error, 'red')
-
-def close_dialog():
-    global isShowStatusDialog, isShowTimedWindow
-    while True:
-        if isShowStatusDialog:
             time.sleep(5)
             StatusDialog.close()
-            isShowStatusDialog = False
-            isFingerprintRunning = True
-        if isShowTimedWindow:
-            time.sleep(5)
-            TimedWindow.close()
-            isShowTimedWindow = False
             isFingerprintRunning = True
 
 
