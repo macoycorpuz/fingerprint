@@ -53,7 +53,7 @@ def statusMessage(message, color='green', t=3000):
     ui_status.lblStatus.setText(message)
     ui_status.lblStatus.setStyleSheet('color: ' + color)
     isFingerprintRunning = False
-    QtCore.QTimer.singleShot(t, StatusDialog.close)
+    QtCore.QTimer.singleShot(t, close_status_dialog)
 
 def timedMessage(name, status):
     t=now.strftime("%I:%M:%S %p")
@@ -62,7 +62,7 @@ def timedMessage(name, status):
     ui_timed.lblStatus.setText("Time %s:"  % status)
     ui_timed.lblTime.setText(datetime.now().strftime("%I:%M:%S %p"))
     isFingerprintRunning = False
-    QtCore.QTimer.singleShot(5000, StatusDialog.close)
+    QtCore.QTimer.singleShot(5000, close_timed_dialog)
 
 def register_employee():
     print("Wow Admin ka")
