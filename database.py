@@ -28,7 +28,6 @@ class database:
         return ["Marcuz Corpuz", "Daryl Mora", "Paolo Merina"]
 
     def isAdmin(self, fingerId):
-        print("Calling isAdmin function. FingerID = " + str(fingerId))
         return fingerId == 0
 
     def saveTime(self, fingerId):
