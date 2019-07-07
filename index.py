@@ -79,7 +79,7 @@ def check_fingerprint():
             error, fingerId = f.searchFingerprint()
             if error: raise Exception(error)
             # elif fingerId <= -1: raise Exception("No Fingerprint")
-            print("FingerId: " + fingerId)
+            print("FingerId: " + str(fingerId))
             if db.isAdmin(fingerId):
                 register_employee()
             else:
