@@ -76,7 +76,7 @@ def check_fingerprint():
             statusMessage(error, 'red')
 
 def close_dialog():
-    time.sleep(2)
+    global isShowStatusDialog, isShowTimedWindow
     while True:
         if isShowStatusDialog:
             time.sleep(5)
