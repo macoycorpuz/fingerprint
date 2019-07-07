@@ -59,6 +59,7 @@ def statusMessage(message, color='green', t=3000):
     isFingerprintRunning = True
 
 def timedMessage(name, status):
+    now=datetime.now()
     t=now.strftime("%I:%M:%S %p")
     TimedWindow.show()
     ui_timed.lblName.setText(name)
