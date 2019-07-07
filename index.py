@@ -66,7 +66,7 @@ def timedMessage(name, status):
     ui_timed.lblStatus.setText("Time %s:"  % status)
     ui_timed.lblTime.setText(str(t))
     isFingerprintRunning = False
-    timesleep(t)
+    timesleep(5000)
     TimedWindow.close()
     isFingerprintRunning = True
 
@@ -82,7 +82,7 @@ def check_fingerprint():
             error, fingerId = f.searchFingerprint()
             if db.isAdmin(fingerId):
                 register_employee()
-            elif fingerId > -1:
+            elif fingerId > 0:
                 name, status = db.saveTime(fingerId)
                 timedMessage(name, status)
             elif error: raise Exception(error)
