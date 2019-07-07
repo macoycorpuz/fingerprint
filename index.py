@@ -53,14 +53,14 @@ def check_fingerprint():
     while True:
         try:
             error, fingerId = f.searchFingerprint()
-            if db.isAdmin(fingerId):
+            if error: raise Exception(error)
+            elif db.isAdmin(fingerId):
                 adminRegister()
             elif fingerId > 0:
                 name, status = db.saveTime(fingerId)
                 timedMessage(name, status)
                 time.sleep(5)
                 TimedWindow.close()
-            elif error: raise Exception(error)
         except Exception as e:
             if "Communication" in str(e): continue
             print("Error Message: %s"  % e)
