@@ -52,17 +52,14 @@ def timedMessage(name, status):
     ui_timed.lblStatus.setText("Time %s:"  % status)
     ui_timed.lblTime.setText(datetime.now().strftime("%I:%M:%S %p"))
 
-def register_employee():
-    print("Wow Admin ka")
-    AdminWindow.show()
-    isFingerprintRunning = False
-
 def check_fingerprint():
     while True:
         try:
             error, fingerId = f.searchFingerprint()
             if db.isAdmin(fingerId):
-                register_employee()
+                AdminWindow.show()
+                time.sleep(5)
+                TimedWindow.close()
             elif fingerId > 0:
                 name, status = db.saveTime(fingerId)
                 timedMessage(name, status)
