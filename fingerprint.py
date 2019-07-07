@@ -27,7 +27,7 @@ class fingerprint(object):
             self.positionNumber = self.result[0]
             if ( self.positionNumber <= -1 ): raise Exception('No match found')
         except Exception as e:
-            self.error(str(e))
+            self.error = str(e)
         
         return self.error, self.positionNumber
 
