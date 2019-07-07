@@ -9,9 +9,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QSizeGrip
 import sys
-
-def btnCancel_clicked():
-    sys.exit(app.exec_())
+import database
 
 class Ui_AdminWindow(QtWidgets.QDialog):
     def setupUi(self, AdminWindow):
@@ -48,9 +46,6 @@ class Ui_AdminWindow(QtWidgets.QDialog):
         AdminWindow.setWindowTitle(_translate("AdminWindow", "AdminWindow"))
         self.label.setText(_translate("AdminWindow", "Select Employee to Register:"))
         self.btnCancel.setText(_translate("AdminWindow", "Cancel"))
-
-        """User Code"""
-        self.btnCancel.clicked.connect(btnCancel_clicked)
 
 
 if __name__ == "__main__":

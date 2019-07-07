@@ -5,8 +5,9 @@ from Views.Admin import Ui_AdminWindow
 from Views.Main import Ui_MainWindow
 from Views.Timed import Ui_TimedWindow
 from Views.Status import Ui_StatusDialog
-import fingerprint
+# import fingerprint
 import database
+
 
 app = QtWidgets.QApplication(sys.argv)
 MainWindow = QtWidgets.QMainWindow()
@@ -24,15 +25,21 @@ ui_admin.setupUi(AdminWindow)
 ui_timed.setupUi(TimedWindow)
 ui_status.setupUi(StatusDialog)
 
+# Initialize Libraries
 f = fingerprint()
 db = database()
 
+# Update Time
 def update_time():
     now=datetime.now()
     currentTime=now.strftime("%I:%M:%S %p")
     currentDate=now.strftime("%b, %d %Y")
     ui_main.lblTime.setText(currentTime)
     ui_main.lblDate.setText(currentDate)
+
+# Cancel Button
+def btnCancel_clicked():
+    AdminWindow.close()
 
 # Set up in a thread
 def statusMessage(message, color='green', t=5):
@@ -53,13 +60,19 @@ def timedMessage(name, status, t):
 
 def check_fingerprint():
     error, fingerId = f.searchFingerprint()
-    if error: return statusMessage(error, 'red')
+    if error:
+        print("Error Message: %s"  % error)
+        return statusMessage(error, 'red')
     
     # if db.isAdmin(fingerId):
     #     register_employee()
     # else:
     #     name, status = db.saveTime(fingerId)
     #     timedMessage(name, status, t)
+
+
+# Initialize Events
+ui_admin.btnCancel.clicked.connect(btnCancel_clicked)
 
 if __name__ == "__main__":
     MainWindow.show()
@@ -71,6 +84,7 @@ if __name__ == "__main__":
 
     # Run this in a different thread
     # Thread(check_fingerprint)
+    check_fingerprint()
 
     sys.exit(app.exec_())
      
