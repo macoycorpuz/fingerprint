@@ -51,21 +51,25 @@ def statusMessage(message, color='green', t=3000):
     StatusDialog.show()
     ui_status.lblStatus.setText(message)
     ui_status.lblStatus.setStyleSheet('color: ' + color)
+    FingerprintThread.terminate()
     timesleep(t)
     StatusDialog.close()
+    FingerprintThread.start()
 
 def timedMessage(name, status, t=5000):
     TimedWindow.show()
     ui_timed.lblName.setText(name)
     ui_timed.lblStatus.setText("Time %s:"  % status)
     ui_timed.lblTime.setText(t)
+    FingerprintThread.terminate()
     timesleep(t)
     TimedWindow.close()
+    FingerprintThread.start()
 
 def register_employee():
     print("Wow Admin ka")
     AdminWindow.show()
-    FingerprintThread.exit()
+    FingerprintThread.terminate()
 
 def check_fingerprint():
     while True:
